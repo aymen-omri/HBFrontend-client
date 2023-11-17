@@ -1,0 +1,560 @@
+<!-- Header -->
+<app-header></app-header>
+
+<!-- start profile -->
+<section class="position-relative">
+  <div class="profile-basic position-relative"
+    style="background-image: url('assets/images/profile-bg.jpg'); background-size: cover; background-position: center; height: 300px;">
+    <div class="bg-overlay"></div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="pt-3">
+          <div class="mt-n5 d-flex gap-3 flex-wrap align-items-end">
+            <div class="image">
+              <img
+                [src]="user?.image?.url || 'https://previews.123rf.com/images/vecstock/vecstock2002/vecstock200206481/141056739-happy-emoji-face-flat-style-icon-design-cartoon-expression-cute-emoticon-character-profile-facial.jpg'"
+                alt="" class="avatar-xl rounded p-1 bg-light mt-n3" />
+              <button (click)="updateProfilePicture()">update</button>
+            </div>
+            <div>
+              <h5 class="fs-18">{{ user.firstName }} {{ user.lastName }}</h5>
+              <div class="text-muted">{{ user.username }}</div>
+            </div>
+            <div class="ms-md-auto">
+              <!-- <p class="mb-0">Toner Member Since Jan 2020</p> -->
+              <a routerLink="/catelog/product-list" class="btn btn-hover" style="background-color: rgb(217, 231, 183);"><i
+                  class="bi bi-cart4 me-1 align-middle"></i> Shopping Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- end profile -->
+
+<!-- start tab-->
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <p-tabView styleClass="verticaltab" class="table-responsive">
+        <p-tabPanel>
+          <ng-template pTemplate="header" class="nav nav-pills flex-column">
+            <a class="nav-link fs-15 active" href="#custom-v-pills-profile"><i
+                class="bi bi-person-circle align-middle me-1"></i> Account Info</a>
+          </ng-template>
+          <ng-template pTemplate="content" class="tab-content text-muted table-fss">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="alert alert-danger" *ngIf="!emailVerified">{{ emailVerificaionString }}</div>
+                    <div class="d-flex mb-4">
+                      <h6 class="fs-16 text-decoration-underline flex-grow-1 mb-0">Personal Info
+                      </h6>
+                      <div class="flex-shrink-0">
+                        <a href="javascript:void(0);" class="badge bg-dark-subtle text-body">Edit</a>
+                      </div>
+                    </div>
+
+                    <div class="table-responsive table-card px-1">
+                      <table class="table table-borderless table-sm">
+                        <tbody>
+                          <tr>
+                            <td>
+                              Customer Name
+                            </td>
+                            <td class="fw-medium">
+                              {{ user.firstName }} {{ user.lastName }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Mobile / Phone Number
+                            </td>
+                            <td class="fw-medium">
+                              {{ user.phoneNumber != null ? user.phoneNumber : "-" }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Email Address
+                            </td>
+                            <td class="fw-medium">
+                              {{ user.email != null ? user.email : "-" }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Location
+                            </td>
+                            <td class="fw-medium">
+                              -
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Since Member
+                            </td>
+                            <td class="fw-medium">
+                              {{ user.memberSince != null ? user.memberSince : "-" }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Birth date
+                            </td>
+                            <td class="fw-medium">
+                              {{ user.birthDate != null ? user.birthDate : "-" }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Profession
+                            </td>
+                            <td class="fw-medium">
+                              {{ user.profession != null ? user.profession : "-" }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Description
+                            </td>
+                            <td class="fw-medium">
+                              {{ user.description != null ? user.description : "-" }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div class="mt-4">
+                      <h6 class="fs-16 text-decoration-underline">Billing & Shipping Address</h6>
+                    </div>
+                    <div class="row mt-4">
+                      <div class="col-md-6">
+                        <div class="card mb-md-0">
+                          <div class="card-body">
+                            <div class="float-end clearfix">
+                              <a routerLink="/shop/address" class="badge bg-primary-subtle text-primary"><i
+                                  class="ri-pencil-fill align-bottom me-1"></i>
+                                Edit</a>
+                            </div>
+                            <div>
+                              <p class="mb-3 fw-semibold fs-12 d-block text-muted text-uppercase">
+                                Billing Address
+                              </p>
+                              <h6 class="fs-14 mb-2 d-block">
+                                {{ billingAddress ? billingAddress.country.countryName : "" }}
+                              </h6>
+                              <span
+                                class="text-muted fw-normal text-wrap mb-1 d-block">{{ billingAddress ? billingAddress.city : "" }}</span>
+                              <span
+                                class="text-muted fw-normal d-block">{{ billingAddress ? billingAddress.postalCode : "" }}
+                                {{ billingAddress ? billingAddress.addressLine1 : "" }}
+                              </span>
+                              <span
+                                class="text-muted fw-normal d-block">{{ billingAddress ? billingAddress.addressLine2: "" }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="card mb-0">
+                          <div class="card-body">
+                            <div class="float-end clearfix">
+                              <a routerLink="/shop/address" class="badge bg-primary-subtle text-primary"><i
+                                  class="ri-pencil-fill align-bottom me-1"></i>
+                                Edit</a>
+                            </div>
+                            <div>
+                              <p class="mb-3 fw-semibold fs-12 d-block text-muted text-uppercase">
+                                Shipping Address
+                              </p>
+                              <h6 class="fs-14 mb-2 d-block">
+                                {{ shippingAddress? shippingAddress.country.countryName : '' }}
+                              </h6>
+                              <span
+                                class="text-muted fw-normal text-wrap mb-1 d-block">{{ shippingAddress ? shippingAddress.city : '' }}</span>
+                              <span
+                                class="text-muted fw-normal d-block">{{ shippingAddress? shippingAddress.postalCode : '' }}
+                                {{ shippingAddress? shippingAddress.addressLine1 : '' }}</span>
+                              <span
+                                class="text-muted fw-normal d-block">{{ shippingAddress ? shippingAddress.addressLine2 : '' }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end row -->
+                  </div>
+                </div>
+                <!--end card-->
+              </div>
+              <!--end col-->
+            </div>
+          </ng-template>
+        </p-tabPanel>
+
+        <p-tabPanel>
+          <ng-template pTemplate="header" class="nav nav-pills flex-column gap-3">
+            <a class="nav-link fs-15" href="#custom-v-pills-list"><i class="bi bi-bookmark-check align-middle me-1"></i>
+              Payment Methods</a>
+          </ng-template>
+          <ng-template pTemplate="content" class="tab-content text-muted">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card overflow-hidden">
+                  <div class="card-body">
+                    <div class="table-responsive table-card">
+                      <table class="table fs-15 align-middle">
+                        <thead>
+                          <tr>
+                            <th scope="col">Account number</th>
+                            <th scope="col">Provider</th>
+                            <th scope="col">Expiry date</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let pm of PaymentMethods">
+                            <td>{{ pm.accountNumber }}</td>
+                            <td>{{ pm.provider }}</td>
+                            <td>{{ pm.expiryDate }}</td>
+                            <td>
+                              <button mat-icon-button color="accent" (click)="openUpdatePaymentMethodDialog(pm)">
+                                <mat-icon>update</mat-icon>
+                              </button>
+                              <button mat-icon-button color="warn" (click)="deletePaymentMethod(pm.id_payment_method)">
+                                <mat-icon>delete</mat-icon>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="hstack gap-2 justify-content-end mt-4">
+                      <a routerLink="/catelog/product-list" class="btn btn-hover" style="background-color: rgb(188, 144, 193);">Continue Shopping <i
+                          class="ri-arrow-right-line align-bottom"></i></a>
+                      <a class="btn btn-hover" style="background-color: rgb(217, 231, 183);" (click)="openAddPaymentMethodDialog()">Add
+                        <i class="ri-arrow-right-line align-bottom"></i></a>
+                    </div>
+                  </div>
+                  <!-- end card-body -->
+                </div>
+                <!--end card-->
+              </div>
+              <!--end col-->
+            </div>
+          </ng-template>
+        </p-tabPanel>
+
+        <p-tabPanel>
+          <ng-template pTemplate="header" class="nav nav-pills flex-column gap-3">
+            <a class="nav-link fs-15" href="#custom-v-pills-order"><i class="bi bi-bag align-middle me-1"></i> Order</a>
+          </ng-template>
+          <ng-template pTemplate="content" class="tab-content text-muted">
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive table-card">
+                  <table class="table fs-15 align-middle table-nowrap">
+                    <thead>
+                      <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Total Amount</th>
+                        <th scope="col">Status</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <a href="javascript:void(0);" class="text-body">TBT15454841</a>
+                        </td>
+                        <td>
+                          <a routerLink="/catelog/product-details">
+                            <h6 class="fs-15 mb-1">World's Most Expensive T Shirt</h6>
+                          </a>
+                          <p class="mb-0 text-muted fs-13">Women's Clothes</p>
+                        </td>
+                        <td><span class="text-muted">01 Jul, 2022</span></td>
+                        <td class="fw-medium">$287.53</td>
+                        <td>
+                          <span class="badge bg-success-subtle text-success">Delivered</span>
+                        </td>
+                        <td>
+                          <a href="#invoiceModal" data-bs-toggle="modal" class="btn btn-secondary btn-sm">Invoice</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <a href="javascript:void(0);" class="text-body">TBT15425012</a>
+                        </td>
+                        <td>
+                          <a routerLink="/catelog/product-details">
+                            <h6 class="fs-15 mb-1">Onyx SmartGRID Chair Red</h6>
+                          </a>
+                          <p class="mb-0 text-muted fs-13">Furniture &amp; Decor</p>
+                        </td>
+                        <td>
+                          <span class="text-muted">01 Feb, 2023</span>
+                        </td>
+                        <td class="fw-medium">$39.99</td>
+                        <td>
+                          <span class="badge bg-secondary-subtle text-secondary">Shipping</span>
+                        </td>
+                        <td>
+                          <a href="#invoiceModal" data-bs-toggle="modal" class="btn btn-secondary btn-sm">Invoice</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <a href="javascript:void(0);" class="text-body">TBT1524563 </a>
+                        </td>
+                        <td>
+                          <a routerLink="/catelog/product-details">
+                            <h6 class="fs-15 mb-1">Slippers Open Toe</h6>
+                          </a>
+                          <p class="mb-0 text-muted fs-13">Footwear</p>
+                        </td>
+                        <td>
+                          <span class="text-muted">09 Dec, 2022</span>
+                        </td>
+                        <td class="fw-medium">$874.00</td>
+                        <td><span class="badge bg-danger-subtle text-danger">Out Of
+                            Delivery</span></td>
+                        <td>
+                          <a href="#invoiceModal" data-bs-toggle="modal" class="btn btn-secondary btn-sm">Invoice</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <a href="javascript:void(0);" class="text-body">TBT1524530 </a>
+                        </td>
+                        <td>
+                          <a routerLink="/catelog/product-details">
+                            <h6 class="fs-15 mb-1">Hp Trendsetter Backpack</h6>
+                          </a>
+                          <p class="mb-0 text-muted fs-13">Handbags &amp; Clutches</p>
+                        </td>
+                        <td>
+                          <span class="text-muted">02 Jan, 2023</span>
+                        </td>
+                        <td class="fw-medium">$32.00</td>
+                        <td>
+                          <span class="badge bg-success-subtle text-success">Delivered</span>
+                        </td>
+                        <td>
+                          <a href="#invoiceModal" data-bs-toggle="modal" class="btn btn-secondary btn-sm">Invoice</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <a href="javascript:void(0);" class="text-body">TBT13642870</a>
+                        </td>
+                        <td>
+                          <a routerLink="/catelog/product-details">
+                            <h6 class="fs-15 mb-1">Innovative education book</h6>
+                          </a>
+                          <p class="mb-0 text-muted fs-13">Books</p>
+                        </td>
+                        <td>
+                          <span class="text-muted">08 Jan, 2023</span>
+                        </td>
+                        <td class="fw-medium">$18.32</td>
+                        <td>
+                          <span class="badge bg-warning-subtle text-warning">Pending</span>
+                        </td>
+                        <td>
+                          <a href="#invoiceModal" data-bs-toggle="modal" class="btn btn-secondary btn-sm">Invoice</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="text-end mt-4">
+                  <a routerLink="/catelog/product-grid" class="btn btn-hover btn-primary">Continue
+                    Shopping <i class="ri-arrow-right-line align-middle ms-1"></i></a>
+                </div>
+              </div>
+              <!-- end card-body -->
+            </div>
+          </ng-template>
+        </p-tabPanel>
+
+        <p-tabPanel>
+          <ng-template pTemplate="header" class="nav nav-pills flex-column gap-3">
+            <a class="nav-link fs-15" href="#custom-v-pills-setting"><i class="bi bi-gear align-middle me-1"></i>
+              Settings</a>
+          </ng-template>
+          <ng-template pTemplate="content" class="tab-content text-muted">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body">
+                    <form [formGroup]="personalInfoForm">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <h5 class="fs-16 text-decoration-underline mb-4">Personal Details
+                          </h5>
+                          <div class="alert alert-danger" *ngIf="updateErrMessage">{{ updateErrMessage }}</div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="mb-3">
+                            <label for="firstnameInput" class="form-label">First
+                              Name</label>
+                            <input type="text" class="form-control" id="firstnameInput"
+                              placeholder="Enter your firstname" formControlName="firstName" />
+                          </div>
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-6">
+                          <div class="mb-3">
+                            <label for="lastnameInput" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="lastnameInput" placeholder="Enter your lastname"
+                              formControlName="lastName" />
+                          </div>
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-6">
+                          <div class="mb-3">
+                            <label for="phonenumberInput" class="form-label">Phone
+                              Number</label>
+                            <input type="text" class="form-control" id="phonenumberInput"
+                              placeholder="Enter your phone number" formControlName="phoneNumber" />
+                          </div>
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-6">
+                          <div class="mb-3">
+                            <label for="emailInput" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="emailInput" placeholder="Enter your email"
+                              formControlName="email" />
+                          </div>
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-4">
+                          <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" placeholder="username"
+                              formControlName="username" />
+                          </div>
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-4">
+                          <div class="mb-3">
+                            <label for="birthday" class="form-label">Birth date</label>
+                            <input type="date" class="form-control" id="birthday" placeholder="birthDate"
+                              formControlName="birthDate" />
+                          </div>
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-4">
+                          <div class="mb-3">
+                            <label for="profession" class="form-label">Profession</label>
+                            <input type="text" class="form-control" id="profession" placeholder="Your profession"
+                              formControlName="profession" />
+                          </div>
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-12">
+                          <div class="mb-3 pb-2">
+                            <label for="exampleFormControlTextarea" class="form-label">Description</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea"
+                              placeholder="Enter your description" rows="3" formControlName="description">
+                                                        </textarea>
+                          </div>
+                        </div>
+                        <!--end col-->
+                      </div>
+                      <!--end row-->
+                      <div class="text-sm-end">
+                        <a class="btn d-block d-sm-inline-block" style="background-color: rgb(188, 144, 193);" (click)="updateUserData()"><i
+                            class="ri-edit-box-line align-middle me-2"></i> Update Personal details</a>
+                      </div>
+                    </form>
+                    <!--end tab-pane-->
+                    <div class="mb-3" id="changePassword">
+                      <h5 class="fs-16 text-decoration-underline mb-4">Change Password</h5>
+                      <div class="alert alert-danger" *ngIf="updatePasswordErrMessage">{{ updatePasswordErrMessage }}
+                      </div>
+                      <div class="alert alert-success" *ngIf="updateSuccessMessage">{{ updateSuccessMessage }}</div>
+                      <form [formGroup]="updatePasswordForm">
+                        <div class="row g-2">
+                          <div class="col-lg-4">
+                            <div>
+                              <label for="oldpasswordInput" class="form-label">Old
+                                Password*</label>
+                              <input type="password" class="form-control" id="oldpasswordInput"
+                                placeholder="Enter current password" formControlName="oldPassword" />
+                            </div>
+                          </div>
+                          <!--end col-->
+                          <div class="col-lg-4">
+                            <div>
+                              <label for="newpasswordInput" class="form-label">New
+                                Password*</label>
+                              <input type="password" class="form-control" id="newpasswordInput"
+                                placeholder="Enter new password" formControlName="newPassword" />
+                            </div>
+                          </div>
+                          <!--end col-->
+                          <div class="col-lg-4">
+                            <div>
+                              <label for="confirmpasswordInput" class="form-label">Confirm
+                                Password*</label>
+                              <input type="password" class="form-control" id="confirmpasswordInput"
+                                placeholder="Confirm password" formControlName="confirmPassword" />
+                            </div>
+                          </div>
+                          <!--end col-->
+                          <div class="col-lg-12">
+                            <div class="mb-3">
+                              <a routerLink="/auth/pass-reset-basic"
+                                class="link-primary text-decoration-underline">Forgot
+                                Password ?</a>
+                            </div>
+                          </div>
+                          <!--end col-->
+                        </div>
+                        <!--end row-->
+                        <div class="text-sm-end">
+                          <a class="btn d-block d-sm-inline-block" style="background-color: rgb(188, 144, 193);" (click)="updatePassword()"><i
+                              class="ri-edit-box-line align-middle me-2"></i> Update Password</a>
+                        </div>
+                      </form>
+                    </div>
+                    <!--end tab-pane-->
+                  </div>
+                  <!-- end card-body -->
+                </div>
+                <!--end card-->
+              </div>
+              <!--end col-->
+            </div>
+          </ng-template>
+        </p-tabPanel>
+
+        <p-tabPanel>
+          <ng-template pTemplate="header" class="nav nav-pills flex-column gap-3">
+            <a class="nav-link fs-15" routerLink="/auth/logout-basic"><i
+                class="bi bi-box-arrow-right align-middle me-1"></i> Logout</a>
+          </ng-template>
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+    <!-- end row-->
+  </div>
+</section>
+<!-- end tab-->
+
+<app-discount-footer [discount]="25"></app-discount-footer>
+
+<app-features></app-features>
+
+<!-- Footer -->
+<app-footer></app-footer>

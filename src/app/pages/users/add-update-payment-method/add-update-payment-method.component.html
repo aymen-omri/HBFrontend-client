@@ -1,0 +1,36 @@
+<h2 mat-dialog-title *ngIf="add">Add payment method</h2>
+<h2 mat-dialog-title *ngIf="update">Update payment method</h2>
+<mat-dialog-content>
+    <div class="alert alert-danger" *ngIf="errMessage">{{errMessage}}</div>
+  <form [formGroup]="formGroup">
+    <div class="mb-3">
+      <label for="accountNumber" class="form-label">Account number</label>
+      <input type="text" mask="0000 0000 0000 0000" class="form-control" id="accountNumber"
+        placeholder="1234 1234 1234 1234" formControlName="accountNumber" />
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="mb-3">
+          <label for="provider" class="form-label">Provider</label>
+          <input type="text" class="form-control" id="provider" placeholder="Enter provider"
+            formControlName="provider" />
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="mb-3">
+          <label for="expiryDate" class="form-label">Expiry date</label>
+          <input type="date" class="form-control" id="expiryDate" placeholder="Enter expiry date"
+            formControlName="expiryDate" />
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="text-sm-end" *ngIf="add">
+    <a class="btn btn-secondary d-block d-sm-inline-block" (click)="addPaymentMethod()"><i class="ri-edit-box-line align-middle me-2"></i> Add</a>
+  </div>
+  <div class="text-sm-end" *ngIf="update">
+    <a class="btn btn-secondary d-block d-sm-inline-block" (click)="updatePaymentMethod()"><i class="ri-edit-box-line align-middle me-2"></i>update</a>
+  </div>
+</mat-dialog-actions>

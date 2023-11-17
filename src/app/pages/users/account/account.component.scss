@@ -1,0 +1,32 @@
+.image {
+    position: relative;
+}
+
+.image button {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    filter: blur(2px);
+    transition: filter 0.5s ease;
+}
+
+.image button:hover {
+    background-color: white;
+    filter: blur(0);
+}
+
+.alert-danger,
+.alert-success {
+    max-width: 400px;
+    margin: 15px auto;
+    text-align: center;
+    word-break: break-all;
+}
+
+.bg-overlay {
+    --bg-opacity: 0.63;
+    background-color: rgba(46, 161, 161, var(--bg-opacity));
+}
