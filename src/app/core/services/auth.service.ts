@@ -3,6 +3,7 @@ import { User } from '../models/auth.models';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { TokenService } from './token.service';
 @Injectable({ providedIn: 'root' })
 
 /**
@@ -12,7 +13,7 @@ export class AuthenticationService {
 
     apiUrl: string = environment.authUrl;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private tokenService: TokenService) { }
 
     public login(loginRequest: any) {
         return this.http.post(this.apiUrl + '/login', loginRequest);
@@ -23,7 +24,8 @@ export class AuthenticationService {
     }
 
     public logout() {
-        return this.http.post<any>(this.apiUrl + '/logout', {});
+        this.tokenService.removeToken();
+        window.location.replace('/auth/signin-basic');
     }
 
     public isLoggedIn() {

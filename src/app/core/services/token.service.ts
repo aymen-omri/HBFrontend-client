@@ -15,7 +15,7 @@ export class TokenService {
     }
 
     private decrypt(token: string) {
-        return CryptoJS.AES.decrypt(token, this.secretKey).toString(CryptoJS.enc.Utf8);
+        return token ? CryptoJS.AES.decrypt(token, this.secretKey).toString(CryptoJS.enc.Utf8) : null;
     }
 
     public storeToken(token: string) {
@@ -32,11 +32,14 @@ export class TokenService {
 
     public extractUsername() {
         let tokenString = this.getToken();
-        const [headerEncoded, payloadEncoded, signatureEncoded] = tokenString.split('.');
-        const header = JSON.parse(Buffer.from(headerEncoded, 'base64').toString());
-        const payload = JSON.parse(Buffer.from(payloadEncoded, 'base64').toString());
-        const signature = Buffer.from(signatureEncoded, 'base64');
-        return payload.sub;
+        if (tokenString) {
+            const [headerEncoded, payloadEncoded, signatureEncoded] = tokenString.split('.');
+            const header = JSON.parse(Buffer.from(headerEncoded, 'base64').toString());
+            const payload = JSON.parse(Buffer.from(payloadEncoded, 'base64').toString());
+            const signature = Buffer.from(signatureEncoded, 'base64');
+            return payload.sub;
+        }
+        return;
     }
 
 }

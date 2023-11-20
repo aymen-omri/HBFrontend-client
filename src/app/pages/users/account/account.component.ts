@@ -9,6 +9,7 @@ import { TokenService } from "src/app/core/services/token.service";
 import { UserProfileService } from "src/app/core/services/user.service";
 import { AddUpdatePaymentMethodComponent } from "../add-update-payment-method/add-update-payment-method.component";
 import { PaymentMethodService } from "src/app/core/services/PaymentMethod.service";
+import { scocialMediaService } from "src/app/core/services/SocialMedia.service";
 
 @Component({
     selector: "app-account",
@@ -28,7 +29,8 @@ export class AccountComponent implements OnInit {
         private addressService: AddressService,
         private emailVerif: EmailVerificationService,
         private dialog: MatDialog,
-        private pmService: PaymentMethodService
+        private pmService: PaymentMethodService,
+        private scocialMediaService: scocialMediaService
     ) { }
 
     user: any;
@@ -62,11 +64,22 @@ export class AccountComponent implements OnInit {
         confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)])
     });
 
+    socialMediaForm = new FormGroup({
+        linkedinLink: new FormControl(),
+        facebookLink: new FormControl(),
+        instagramLink: new FormControl(),
+        tiktokLink: new FormControl()
+    });
+
     updateErrMessage: string = "";
     updateSuccessMessage: string = "";
     updatePasswordErrMessage: string = "";
     shippingAddress: any;
     billingAddress: any;
+    socialMedia: any;
+    updateSocialMediaButton: boolean = false;
+    socialMediaSuccessMessage: string = "";
+    socialMediaErrorMessage: string = "";
 
     getUserData() {
         this.userService.getByEmail(this.tokenService.extractUsername()).subscribe({
@@ -77,6 +90,7 @@ export class AccountComponent implements OnInit {
                 this.getUserAddresses(this.user.id_user);
                 this.checkEmailVerified(this.user.email);
                 this.getUserPaymentMethods(this.user.id_user);
+                this.getUserSocialMedias(this.user.id_user);
             },
             error: (err: any) => {
                 //window.location.replace("/");
@@ -102,6 +116,25 @@ export class AccountComponent implements OnInit {
 
     getUserPaymentMethods(id: number) {
         this.pmService.getAllByUserId(id).subscribe((data: any) => this.PaymentMethods = data);
+    }
+
+    getUserSocialMedias(id: number) {
+        this.scocialMediaService.getUserSocialMedias(id).subscribe({
+            next: (data: any) => {
+                console.log(data);
+                this.socialMedia = data;
+                this.updateSocialMediaButton = true;
+                this.socialMediaForm.patchValue({
+                    linkedinLink: this.socialMedia.linkedinLink,
+                    facebookLink: this.socialMedia.facebookLink,
+                    instagramLink: this.socialMedia.instagramLink,
+                    tiktokLink: this.socialMedia.tiktokLink
+                });
+            },
+            error: (error: any) => {
+                console.log("No social media provided!");
+            }
+        });
     }
 
     checkEmailVerified(email: string) {
@@ -235,6 +268,57 @@ export class AccountComponent implements OnInit {
                 alert("Error");
             }
         });
+    }
+
+    insertSocialMedias() {
+        if (this.socialMediaForm.valid) {
+            let socialMedias = {
+                facebookLink: this.socialMediaForm.value.facebookLink,
+                instagramLink: this.socialMediaForm.value.instagramLink,
+                tiktokLink: this.socialMediaForm.value.tiktokLink,
+                linkedinLink: this.socialMediaForm.value.linkedinLink,
+                user: {
+                    id_user: this.user.id_user
+                }
+            }
+            this.scocialMediaService.addSocialMedias(socialMedias).subscribe({
+                next: () => {
+                    window.location.reload();
+                },
+                error: (err) => {
+                    console.log(err);
+                    this.socialMediaErrorMessage = "Failed to Insert";
+                    this.hideMessage();
+                }
+            });
+        }
+    }
+
+    updateSocialMedia() {
+        if (this.socialMediaForm.valid) {
+            this.scocialMediaService.updateSocialMedia(this.user.id_user, this.socialMediaForm.value).subscribe({
+                next: () => {
+                    this.socialMediaSuccessMessage = "Updated Successfully";
+                    this.hideMessage();
+                },
+                error: (err) => {
+                    console.log(err);
+                    this.socialMediaErrorMessage = "Failed to Update";
+                    this.hideMessage();
+                }
+            });
+        }
+    }
+
+    hideMessage() {
+        setTimeout(() => {
+            this.socialMediaErrorMessage = '';
+            this.socialMediaSuccessMessage = '';
+        }, 2000);
+    }
+
+    logout() {
+        this.authService.logout();
     }
 
 }

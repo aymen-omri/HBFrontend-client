@@ -24,8 +24,9 @@
             </div>
             <div class="ms-md-auto">
               <!-- <p class="mb-0">Toner Member Since Jan 2020</p> -->
-              <a routerLink="/catelog/product-list" class="btn btn-hover" style="background-color: rgb(217, 231, 183);"><i
-                  class="bi bi-cart4 me-1 align-middle"></i> Shopping Now</a>
+              <a routerLink="/catelog/product-list" class="btn btn-hover"
+                style="background-color: rgb(217, 231, 183);"><i class="bi bi-cart4 me-1 align-middle"></i> Shopping
+                Now</a>
             </div>
           </div>
         </div>
@@ -197,6 +198,68 @@
             </div>
           </ng-template>
         </p-tabPanel>
+        <p-tabPanel>
+          <ng-template pTemplate="header" class="nav nav-pills flex-column gap-3">
+            <a class="nav-link fs-15" href="#social-media"><i class="bi bi-facebook align-middle me-1"></i>
+              Social media</a>
+          </ng-template>
+          <ng-template pTemplate="content" class="tab-content text-muted table-fss">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="fs-16 text-decoration-underline flex-grow-1 mb-0">Social Media
+                    </h6>
+                    <div class="alert alert-danger" *ngIf="socialMediaErrorMessage">{{ socialMediaErrorMessage }}</div>
+                    <div class="alert alert-success" *ngIf="socialMediaSuccessMessage">{{ socialMediaSuccessMessage }}
+                    </div>
+                    <form [formGroup]="socialMediaForm">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="mb-3">
+                            <label for="facebook" class="form-label">Facebook</label>
+                            <input type="url" class="form-control" id="facebook" placeholder="facebook link"
+                              formControlName="facebookLink" />
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="mb-3">
+                            <label for="instagram" class="form-label">Instagram</label>
+                            <input type="url" class="form-control" id="instagram" placeholder="instagram link"
+                              formControlName="instagramLink" />
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="mb-3">
+                            <label for="tiktok" class="form-label">Tiktok</label>
+                            <input type="url" class="form-control" id="tiktok" placeholder="Tiktok link"
+                              formControlName="instagramLink" />
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="mb-3">
+                            <label for="linkedin" class="form-label">LinkedIn</label>
+                            <input type="url" class="form-control" id="linkedin" placeholder="LinkedIn link"
+                              formControlName="linkedinLink" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="text-sm-end" *ngIf="!updateSocialMediaButton">
+                        <a class="btn d-block d-sm-inline-block" style="background-color: rgb(188, 144, 193);"
+                          (click)="insertSocialMedias()"><i class="ri-edit-box-line align-middle me-2"></i>Add</a>
+                      </div>
+                      <div class="text-sm-end" *ngIf="updateSocialMediaButton">
+                        <a class="btn d-block d-sm-inline-block" style="background-color: rgb(188, 144, 193);"
+                          (click)="updateSocialMedia()"><i class="ri-edit-box-line align-middle me-2"></i> Update</a>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div><!-- end col-->
+              <!-- end row -->
+            </div>
+          </ng-template>
+        </p-tabPanel>
 
         <p-tabPanel>
           <ng-template pTemplate="header" class="nav nav-pills flex-column gap-3">
@@ -236,9 +299,11 @@
                       </table>
                     </div>
                     <div class="hstack gap-2 justify-content-end mt-4">
-                      <a routerLink="/catelog/product-list" class="btn btn-hover" style="background-color: rgb(188, 144, 193);">Continue Shopping <i
+                      <a routerLink="/catelog/product-list" class="btn btn-hover"
+                        style="background-color: rgb(188, 144, 193);">Continue Shopping <i
                           class="ri-arrow-right-line align-bottom"></i></a>
-                      <a class="btn btn-hover" style="background-color: rgb(217, 231, 183);" (click)="openAddPaymentMethodDialog()">Add
+                      <a class="btn btn-hover" style="background-color: rgb(217, 231, 183);"
+                        (click)="openAddPaymentMethodDialog()">Add
                         <i class="ri-arrow-right-line align-bottom"></i></a>
                     </div>
                   </div>
@@ -253,7 +318,8 @@
 
         <p-tabPanel>
           <ng-template pTemplate="header" class="nav nav-pills flex-column gap-3">
-            <a class="nav-link fs-15" href="#custom-v-pills-order"><i class="bi bi-bag align-middle me-1"></i> Order</a>
+            <a class="nav-link fs-15" href="#custom-v-pills-order"><i class="bi bi-bag align-middle me-1"></i>
+              Order</a>
           </ng-template>
           <ng-template pTemplate="content" class="tab-content text-muted">
             <div class="card">
@@ -473,8 +539,10 @@
                       </div>
                       <!--end row-->
                       <div class="text-sm-end">
-                        <a class="btn d-block d-sm-inline-block" style="background-color: rgb(188, 144, 193);" (click)="updateUserData()"><i
-                            class="ri-edit-box-line align-middle me-2"></i> Update Personal details</a>
+                        <a class="btn d-block d-sm-inline-block" style="background-color: rgb(188, 144, 193);"
+                          (click)="updateUserData()"><i class="ri-edit-box-line align-middle me-2"></i> Update
+                          Personal
+                          details</a>
                       </div>
                     </form>
                     <!--end tab-pane-->
@@ -523,8 +591,9 @@
                         </div>
                         <!--end row-->
                         <div class="text-sm-end">
-                          <a class="btn d-block d-sm-inline-block" style="background-color: rgb(188, 144, 193);" (click)="updatePassword()"><i
-                              class="ri-edit-box-line align-middle me-2"></i> Update Password</a>
+                          <a class="btn d-block d-sm-inline-block" style="background-color: rgb(188, 144, 193);"
+                            (click)="updatePassword()"><i class="ri-edit-box-line align-middle me-2"></i> Update
+                            Password</a>
                         </div>
                       </form>
                     </div>
@@ -541,7 +610,7 @@
 
         <p-tabPanel>
           <ng-template pTemplate="header" class="nav nav-pills flex-column gap-3">
-            <a class="nav-link fs-15" routerLink="/auth/logout-basic"><i
+            <a class="nav-link fs-15" (click)="logout()"><i
                 class="bi bi-box-arrow-right align-middle me-1"></i> Logout</a>
           </ng-template>
         </p-tabPanel>
