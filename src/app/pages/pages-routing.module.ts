@@ -23,6 +23,7 @@ const routes: Routes = [
         path: "email",
         loadChildren: () => import("./email/email.module").then((m) => m.EmailModule),
     },
+    { path: 'consultant', loadChildren: () => import('./consultant/consultant.module').then(m => m.ConsultantModule) },
 ];
 
 @NgModule({

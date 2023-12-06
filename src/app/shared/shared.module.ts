@@ -33,7 +33,8 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient } from "@angular/common/http";
 import { MaterialModule } from './material/material.module';
-
+import { CardModule } from 'primeng/card';
+import { FileUploadModule } from 'primeng/fileupload';
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
 }
@@ -50,6 +51,8 @@ export function createTranslateLoader(http: HttpClient): any {
     MegaMenuModule,
     MenubarModule,
     FormsModule,
+    CardModule,
+    FileUploadModule,
     ReactiveFormsModule,
     TranslateModule.forRoot({
       defaultLanguage: "en",
@@ -72,7 +75,9 @@ export function createTranslateLoader(http: HttpClient): any {
     LoginHeaderComponent,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    CardModule,
+    FileUploadModule
   ],
   providers: [LanguageService],
 

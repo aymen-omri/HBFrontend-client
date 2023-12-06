@@ -12,9 +12,11 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 // Component
 import { AccountComponent } from "./account/account.component";
 import { AddUpdatePaymentMethodComponent } from './add-update-payment-method/add-update-payment-method.component';
+import { BecomeVendorComponent } from './become-vendor/become-vendor.component';
+import { BecomeConsultantComponent } from './become-consultant/become-consultant.component';
 
 @NgModule({
-  declarations: [AccountComponent, AddUpdatePaymentMethodComponent],
+  declarations: [AccountComponent, AddUpdatePaymentMethodComponent, BecomeVendorComponent, BecomeConsultantComponent],
   imports: [CommonModule, UsersRoutingModule, SharedModule, TabViewModule, NgxMaskDirective, NgxMaskPipe],
   providers: [provideNgxMask()]
 })

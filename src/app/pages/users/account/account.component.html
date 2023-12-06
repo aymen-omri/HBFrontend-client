@@ -260,6 +260,30 @@
             </div>
           </ng-template>
         </p-tabPanel>
+        <p-tabPanel>
+          <ng-template pTemplate="header" class="nav nav-pills flex-column gap-3">
+            <a class="nav-link fs-15" href="#vendor-space"><i class="bi bi-bag-heart align-middle me-1"></i>
+              Vendor space</a>
+          </ng-template>
+          <ng-template pTemplate="content" class="tab-content text-muted table-fss">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <!--  <div class="card-body">
+                    <h6 class="fs-16 text-decoration-underline flex-grow-1 mb-0">Vendor space
+                    </h6>
+                    <div *ngIf="showBecomeVendorButton"> You want to bacome a vendor <a class="card-link"
+                        style="cursor: pointer;" (click)="becomeVendor()">Click here!</a>
+                    </div>
+                    <div *ngIf="this.vendor.approved == 1"> Request sent : {{ this.vendor.date }}
+                    </div>
+                  </div>-->
+                </div>
+              </div><!-- end col-->
+              <!-- end row -->
+            </div>
+          </ng-template>
+        </p-tabPanel>
 
         <p-tabPanel>
           <ng-template pTemplate="header" class="nav nav-pills flex-column gap-3">
@@ -610,8 +634,8 @@
 
         <p-tabPanel>
           <ng-template pTemplate="header" class="nav nav-pills flex-column gap-3">
-            <a class="nav-link fs-15" (click)="logout()"><i
-                class="bi bi-box-arrow-right align-middle me-1"></i> Logout</a>
+            <a class="nav-link fs-15" (click)="logout()"><i class="bi bi-box-arrow-right align-middle me-1"></i>
+              Logout</a>
           </ng-template>
         </p-tabPanel>
       </p-tabView>

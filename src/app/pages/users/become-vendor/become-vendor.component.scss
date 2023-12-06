@@ -1,0 +1,24 @@
+.space {
+    padding: 5px;
+}
+
+/* Add this style to your component's CSS file or style section */
+:host ::ng-deep .p-fileupload-buttonbar .p-fileupload-upload-button {
+    display: none !important;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alert-danger,
+.alert-success {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    word-break: break-all;
+}

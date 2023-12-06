@@ -10,6 +10,8 @@ import { UserProfileService } from "src/app/core/services/user.service";
 import { AddUpdatePaymentMethodComponent } from "../add-update-payment-method/add-update-payment-method.component";
 import { PaymentMethodService } from "src/app/core/services/PaymentMethod.service";
 import { scocialMediaService } from "src/app/core/services/SocialMedia.service";
+import { BecomeVendorComponent } from "../become-vendor/become-vendor.component";
+import { VendorService } from "src/app/core/services/Vendor.service";
 
 @Component({
     selector: "app-account",
@@ -30,7 +32,8 @@ export class AccountComponent implements OnInit {
         private emailVerif: EmailVerificationService,
         private dialog: MatDialog,
         private pmService: PaymentMethodService,
-        private scocialMediaService: scocialMediaService
+        private scocialMediaService: scocialMediaService,
+        private VendorService: VendorService
     ) { }
 
     user: any;
@@ -42,6 +45,10 @@ export class AccountComponent implements OnInit {
     emailVerificaionString: string = "";
 
     PaymentMethods: any;
+
+    vendor: any;
+
+    showBecomeVendorButton: boolean = true;
 
     @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
@@ -91,6 +98,7 @@ export class AccountComponent implements OnInit {
                 this.checkEmailVerified(this.user.email);
                 this.getUserPaymentMethods(this.user.id_user);
                 this.getUserSocialMedias(this.user.id_user);
+                //this.getUserVendor(this.user.id_user);
             },
             error: (err: any) => {
                 //window.location.replace("/");
@@ -133,6 +141,22 @@ export class AccountComponent implements OnInit {
             },
             error: (error: any) => {
                 console.log("No social media provided!");
+            }
+        });
+    }
+
+    getUserVendor(id: number) {
+        this.VendorService.getVendorByIdUser(id).subscribe({
+            next: (data: any) => {
+                this.vendor = this.vendor;
+                if (this.vendor.approved == 3) {
+                    this.showBecomeVendorButton = true;
+                } else {
+                    this.showBecomeVendorButton = false;
+                }
+            },
+            error: () => {
+                this.showBecomeVendorButton = true;
             }
         });
     }
@@ -319,6 +343,10 @@ export class AccountComponent implements OnInit {
 
     logout() {
         this.authService.logout();
+    }
+
+    becomeVendor() {
+        this.dialog.open(BecomeVendorComponent, {});
     }
 
 }

@@ -1,0 +1,147 @@
+<!-- Header -->
+<app-header></app-header>
+<!--Start form become vendor-->
+<div class="container" style="margin-top: 150px;">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body title">
+          <h3 class="form-label"><i class="bi bi-bag-heart align-middle me-1"></i>Become a vendor</h3>
+          <button type="submit" class="btn btn-primary" (click)="sendVendorRequest()">Send request</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="alert alert-danger" *ngIf="errMessage">{{ errMessage }}</div>
+  <div class="row mt-3">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="fs-16 text-decoration-underline flex-grow-1 mb-0">Basic informations
+          </h6>
+          <form action="javascript:void(0);" [formGroup]="basicInfoFormGroup" class="mt-3">
+            <div class="row">
+              <div class="col-md-4">
+                <label for="companyName" class="form-label">Company name</label>
+                <input type="text" formControlName="companyName" class="form-control" id="companyName"
+                  placeholder="Enter company name">
+              </div>
+              <div class="col-md-4">
+                <label for="identificationNumber" class="form-label">Identification number</label>
+                <input type="text" formControlName="identificationNumber" class="form-control" id="identificationNumber"
+                  placeholder="Company Identification Number">
+              </div>
+              <div class="col-md-4">
+                <label for="shopLink" class="form-label">Shop link</label>
+                <input type="url" formControlName="shopLink" class="form-control" id="shopLink"
+                  placeholder="www.shop.com">
+              </div>
+              <div class="col-md-12">
+                <label for="vendorDescription" class="form-label">Description</label>
+                <textarea class="form-control" formControlName="vendorDescription" id="vendorDescription"
+                  placeholder="Vendor description" rows="3">
+                                                </textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="space"></div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="fs-16 text-decoration-underline flex-grow-1 mb-0">Company address
+          </h6>
+          <form [formGroup]="companyAddressFormGroup" class="mt-3">
+            <div class="row">
+              <div class="col-6">
+                <label for="addressLine1" class="form-label">Address line 1</label>
+                <input type="text" formControlName="addressLine1" class="form-control" id="addressLine1"
+                  placeholder="1234 Main St">
+              </div>
+              <div class="col-6">
+                <label for="addressLine2" class="form-label">Address line 2</label>
+                <input type="text" formControlName="addressLine2" class="form-control" id="addressLine2"
+                  placeholder="Apartment, studio, or floor">
+              </div>
+              <div class="col-md-6">
+                <label for="city" class="form-label">City</label>
+                <input type="text" class="form-control" id="city" placeholder="City" formControlName="city">
+              </div>
+              <div class="col-md-4">
+                <label for="country" class="form-label">Country</label>
+                <select id="country" class="form-select" formControlName="country">
+                  <option>Choose...</option>
+                  <option [value]="country.id_country" *ngFor="let country of countries">{{ country.countryName }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label for="postalCode" class="form-label">Postal code</label>
+                <input type="text" class="form-control" id="postalCode" placeholder="postal code"
+                  formControlName="postalCode">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="space"></div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="fs-16 text-decoration-underline flex-grow-1 mb-0">Delivery countries
+          </h6>
+          <div class="row mt-3">
+            <div class="col-md-4">
+              <label for="inputState" class="form-label">Country</label>
+              <select id="inputState" class="form-select" (change)="showSelectedShippingCountries($event)">
+                <option selected>Choose...</option>
+                <option [value]="country.countryName" *ngFor="let country of countries">{{ country.countryName }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-8">
+              <label class="form-label">Selected countries:</label><br>
+              <div class="shipping-countries" *ngFor="let c of shippingCountries" (click)="deleteShippingCountry(c)"
+                style="display: inline-flex;margin-right:15px;cursor:pointer;">
+                {{ c }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="space"></div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="fs-16 text-decoration-underline flex-grow-1 mb-0">Documents
+          </h6>
+          <div class="row mt-3">
+            <div class="col-lg">
+              <div class="mb-3">
+                <label for="formFileMultiple" class="form-label">Select files</label>
+                <input name="fileInput" style="display:none;" class="form-control" (change)="onSelectedFile($event)"
+                  type="file" id="formFileMultiple" multiple>
+              </div>
+            </div>
+            <div class="col-lg">
+              <ul>
+                <li *ngFor="let file of uploadedFiles" (click)="deleteSelectedFile(file.name)">{{ file.name }} -
+                  {{ file.size }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
